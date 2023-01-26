@@ -1,1 +1,2 @@
-scraper/chromedriver.exe
+/scraper/chromedriver.exe
+/server/node_modules/
