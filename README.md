@@ -6,5 +6,5 @@ This repository contains code for displaying 500 apartments from the `https://ww
 
 ## Tech Stack
 - Frontend: React
-- Backend: Node.js + PostgreSQL db
+- Backend: Node.js + PostgreSQL DB
 - Python web scraper
