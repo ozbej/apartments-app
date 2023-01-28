@@ -1,6 +1,6 @@
 FROM node:14.15.4-alpine
 
-EXPOSE 3000 
+EXPOSE 8080
 RUN mkdir -p /app/public /app/src
 WORKDIR /app
 COPY tsconfig.json /app/tsconfig.json
