@@ -27,8 +27,13 @@ const getApartmentImages = (request: Request, response: Response) => {
   [id], (error: any, results: any) => {
     if (error)
       response.status(500).json({ message: "Error in invocation of API: /apartment_images/:id" })
-    else
-      response.status(200).json(results.rows)
+    else {
+      let rows: string[] = [];
+      results.rows.forEach((element: any) => {
+        rows.push(element.link)
+      });
+      response.status(200).json(rows)
+    }
   })
 }
 

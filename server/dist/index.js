@@ -27,8 +27,13 @@ const getApartmentImages = (request, response) => {
     pool.query("SELECT ai.link FROM apartments a INNER JOIN apartment_images ai ON a.id = ai.apartment_id WHERE ai.apartment_id = $1", [id], (error, results) => {
         if (error)
             response.status(500).json({ message: "Error in invocation of API: /apartment_images/:id" });
-        else
-            response.status(200).json(results.rows);
+        else {
+            let rows = [];
+            results.rows.forEach((element) => {
+                rows.push(element.link);
+            });
+            response.status(200).json(rows);
+        }
     });
 };
 app.get('/', (req, res) => {
