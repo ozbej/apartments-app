@@ -1,6 +1,7 @@
-version: '3'
+version: '3.8'
 services:
     server:
+        container_name: server
         build:
             context: ./server
             dockerfile: Dockerfile
@@ -12,6 +13,7 @@ services:
         ports:
             - "8000:8000"
     frontend:
+        container_name: frontend
         build:
             context: ./frontend
             dockerfile: Dockerfile

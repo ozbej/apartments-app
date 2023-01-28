@@ -1,4 +1,3 @@
-import argparse
 import psycopg2
 from bs4 import BeautifulSoup
 from selenium import webdriver
