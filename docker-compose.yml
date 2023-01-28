@@ -1,0 +1,23 @@
+version: '3'
+services:
+    server:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        volumes:
+            - /app/node_modules
+            - ./server/config:/app/config
+            - ./server/src:/app/src
+            - ./server/test:/app/test
+        ports:
+            - "8000:8000"
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        volumes:
+            - /app/node_modules
+            - ./frontend/src:/app/src
+            - ./frontend/public:/app/public
+        ports:
+            - "3000:3000"
