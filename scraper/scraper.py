@@ -1,6 +1,7 @@
 import psycopg2
 from bs4 import BeautifulSoup
 from selenium import webdriver
+import time
 
 
 SEED_URL = 'https://www.sreality.cz/en/search/for-sale/apartments'
@@ -18,17 +19,19 @@ def scrape_site(cursor):
   while count < 500:
     # Get the source code for the current page
     browser.get(f"{SEED_URL}?page={curr_page}")
+    time.sleep(5)
     soup = BeautifulSoup(browser.page_source, "lxml")
+    print(f"Scraping {SEED_URL}?page={curr_page}", end = "; ")
     curr_page += 1
 
-    # Get all properties and process them
+    # Get all apartments and process them
     apartment_divs = soup.find_all("div", class_="property")
+    print(f"found {len(apartment_divs)} apartments on this page")
     for apartment_div in apartment_divs:
-      link = apartment_div.find_all("a", class_="title", limit=1)[0]["href"] # Property link
-      title = apartment_div.find_all("span", class_="name", limit=1)[0].text # Property title
-      location = apartment_div.find_all("span", class_="locality", limit=1)[0].text # Property location
-      price = apartment_div.find_all("span", class_="norm-price", limit=1)[0].text # Property price
-      print(f"Link: {link}\nTitle: {title}\nLocation: {location}\nPrice: {price}")
+      link = apartment_div.find_all("a", class_="title", limit=1)[0]["href"] # Apartment link
+      title = apartment_div.find_all("span", class_="name", limit=1)[0].text # Apartment title
+      location = apartment_div.find_all("span", class_="locality", limit=1)[0].text # Apartment location
+      price = apartment_div.find_all("span", class_="norm-price", limit=1)[0].text # Apartment price
 
       # Insert current apartment into DB
       cursor.execute("""INSERT INTO apartments (id, link, title, location, price) 
@@ -46,19 +49,15 @@ def scrape_site(cursor):
         # Insert each image into DB
         cursor.execute("INSERT INTO apartment_images (apartment_id, link) VALUES (%s, %s)", (count, image_link))
 
-      print(image_links)
-      print("---------------")
       count += 1
-    break
-
 
 if __name__ == "__main__":
   # Establish connection
   conn = psycopg2.connect(
-    database="postgres",
-    user='root',
-    password='root',
-    host='localhost',
+    database="mcltypct",
+    user='mcltypct',
+    password='5JvaPQTf4pTkND1gqkvNAqjSn_zWsNAA',
+    host='hattie.db.elephantsql.com',
     port= '5432'
   )
   conn.autocommit = True
