@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const port = 8000;
+const cors = require('cors');
+app.use(cors());
 const Pool = require('pg').Pool;
 const pool = new Pool({
     user: 'mcltypct',
@@ -15,7 +17,7 @@ const pool = new Pool({
     port: 5432,
 });
 const getApartments = (request, response) => {
-    pool.query('SELECT * FROM apartments', (error, results) => {
+    pool.query('SELECT id, link, title, location, price FROM apartments', (error, results) => {
         if (error)
             response.status(500).json({ message: "Error in invocation of API: /apartments" });
         else
@@ -23,6 +25,14 @@ const getApartments = (request, response) => {
     });
 };
 const getApartmentImages = (request, response) => {
+    pool.query('SELECT apartment_id, link FROM apartment_images', (error, results) => {
+        if (error)
+            response.status(500).json({ message: "Error in invocation of API: /apartment_images" });
+        else
+            response.status(200).json(results.rows);
+    });
+};
+const getApartmentImagesById = (request, response) => {
     const id = parseInt(request.params.id);
     pool.query("SELECT ai.link FROM apartments a INNER JOIN apartment_images ai ON a.id = ai.apartment_id WHERE ai.apartment_id = $1", [id], (error, results) => {
         if (error)
@@ -40,7 +50,8 @@ app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
 app.get('/apartments', getApartments);
-app.get('/apartment_images/:id', getApartmentImages);
+app.get('/apartment_images', getApartmentImages);
+app.get('/apartment_images/:id', getApartmentImagesById);
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
