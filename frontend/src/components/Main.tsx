@@ -4,22 +4,12 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import Apartment from './Apartment';
+import ApartmentObject from '../interfaces/ApartmentObject';
+import ApartmentImagesObject from '../interfaces/ApartmentImagesObject';
+
 import '../styles/main.css'
-
-interface ApartmentObject {
-  id: number;
-  link: string;
-  title: string;
-  location: string;
-  price: string;
-  apartmentImages: string[];
-}
-
-interface ApartmentImagesObject {
-  apartment_id: number;
-  link: string;
-}
 
 function Main() {
   const [apartments, setApartments] = useState<ApartmentObject[]>([]);
@@ -27,20 +17,24 @@ function Main() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("newest");
 
+  /* Pagination function */
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     return apartments.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, apartments, pageSize]);
 
+  /* Page changed function */
   const pageChanged = (event: React.ChangeEvent<unknown>, page: number): void => {
     setCurrentPage(page);
   }
 
+  /* Page size changed function */
   const pageSizeChanged = (event: SelectChangeEvent) => {
     setPageSize(Number(event.target.value));
   };
 
+  /* Sort by changed function */
   const sortByChanged = (event: SelectChangeEvent) => {
     setSortBy(event.target.value);
 

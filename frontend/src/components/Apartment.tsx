@@ -5,20 +5,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
+import ApartmentProps from '../interfaces/ApartmentProps';
+
 import '../styles/apartment.css'
-
-interface ApartmentObject {
-  id: number;
-  link: string;
-  title: string;
-  location: string;
-  price: string;
-  apartmentImages?: string[];
-}
-
-interface ApartmentProps {
-  apartment: ApartmentObject;
-}
 
 const responsiveLayout = [
   {
