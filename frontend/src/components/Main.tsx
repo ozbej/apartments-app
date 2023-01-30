@@ -146,7 +146,7 @@ function Main() {
       {apartments.length !== 0 && (
         <div className="apartments-container">
           {currentTableData.map((apartment: ApartmentObject, index: number) => (
-            <>{apartment.id} <Apartment apartment={apartment} /></>
+            <Apartment apartment={apartment} />
           ))}
         </div>
       )}

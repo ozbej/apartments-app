@@ -49,10 +49,6 @@ const getApartmentImagesById = (request: Request, response: Response) => {
   })
 }
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
-
 app.get('/apartments', getApartments);
 
 app.get('/apartment_images', getApartmentImages);

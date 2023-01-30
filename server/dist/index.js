@@ -46,9 +46,6 @@ const getApartmentImagesById = (request, response) => {
         }
     });
 };
-app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server');
-});
 app.get('/apartments', getApartments);
 app.get('/apartment_images', getApartmentImages);
 app.get('/apartment_images/:id', getApartmentImagesById);
