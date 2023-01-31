@@ -33,7 +33,7 @@ const responsiveLayout = [
     loop: true,
   },
   {
-    breakpoint: 2160,
+    breakpoint: 4000,
     cols: 5,
     rows: 1,
     gap: 10,
